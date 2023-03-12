@@ -1,0 +1,1 @@
+import numpy as npdef quadratic_equation(a, b, c):    D = b**2-4*a*c    x1 = (-b+D**1/2)/(2*a)    x2 = (-b-D**1/2)/(2*a)        return [x1, x2]a, b, c = [int(input()) for i in range(3)]x1, x2 = quadratic_equation(a, b, c)print(x1, x2)x1, x2 = np.roots([a, b, c])print(x1, x2)x1, x2 = np.polynomial.Polynomial([a, b, c]).roots()print(x1, x2)
