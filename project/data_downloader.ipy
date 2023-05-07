@@ -1,5 +1,0 @@
-# -*- coding: utf-8 -*-
-
-!kaggle datasets list -s 'TOP 1000 fastest growing companies in Europe'
-!kaggle datasets download -d 'nguyenthicamlai/top-1000-fastest-growing-companies-in-europe' --unzip
-#!unzip top-1000-fastest-growing-companies-in-europe.zip

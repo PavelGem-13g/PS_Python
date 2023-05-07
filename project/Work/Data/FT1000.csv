@@ -159,7 +159,7 @@ Rank,Name,Ranked2021,Ranked2020,Country,Sector,CAGR,Revenue2020,Revenue2017,Empl
 158,DPM - Deutsches Personal Management,Yes,No,Germany,Support Services,114.18,2267760,230800,60,10,2016
 159,Monese,No,No,UK,Fintech,114,18196451,1870109,243,84,2013
 160,Arquimea,Yes,No,Spain,Technology,113.05,72044361,7450099,288,40,2005
-161,Groupe PERSPECTIVE,No,No,France,Education,112.98,2709000,280390,18,4,2013
+161,Groupe PERSPECTIVE,No,No,France,Education,112.98,2709000,280390,18,4,2013
 162,Funnel,Yes,No,Sweden,Technology,112.98,11499031,1217338,155,37,2014
 163,Living Quarter,No,No,Germany,Health,111.62,5016731,529371,49,5,2015
 164,Svea Solar,No,No,Sweden,Energy,111.23,66146911,7177912,287,38,2013
@@ -444,7 +444,7 @@ Rank,Name,Ranked2021,Ranked2020,Country,Sector,CAGR,Revenue2020,Revenue2017,Empl
 443,S.T.A.R. Digital,No,No,Croatia,Advertising,66.31,3211868,699907,8,10,2013
 444,Funding Options,Yes,No,UK,Fintech,66.26,5922043,1297717,62,29,2011
 445,Isimed,No,No,Italy,Health,66.26,4828920,1050660,14,8,2014
-446,Sonar SonarQube SonarCloud SonarLint,No,No,Switzerland,Technology,66.14,83632640,16861349,195,50,2008
+446,"Sonar, SonarQube, SonarCloud, SonarLint",No,No,Switzerland,Technology,66.14,83632640,16861349,195,50,2008
 447,Scherer,No,No,Germany,Support Services,66.11,4285766,934994,30,4,2016
 448,Mycroclean Italia,No,No,Italy,Support Services,66,3366730,736000,24,14,2002
 449,Piscor,No,No,Italy,Ecommerce,65.86,4842410,1061360,16,8,2015
@@ -605,7 +605,7 @@ Rank,Name,Ranked2021,Ranked2020,Country,Sector,CAGR,Revenue2020,Revenue2017,Empl
 604,COUTEAUJAPONAIS.COM,No,No,France,Retail,53.24,4579102,1272558,17,5,2004
 605,PHYSIDIA,Yes,No,France,Health,53.21,16746545,4656191,58,20,2010
 606,Horando Deutschland,No,Yes,Germany,Retail,53.17,8111269,2257390,3,2,2013
-607,Diablochairs Jan Nowak,Yes,Yes,Poland,Ecommerce,53.14,21520495,6549376,79,22,2004
+607,"Diablochairs, Jan Nowak",Yes,Yes,Poland,Ecommerce,53.14,21520495,6549376,79,22,2004
 608,Parkster,Yes,Yes,Sweden,Technology,53.11,55139984,15711602,28,16,2011
 609,BIOTYFULL,Yes,No,France,Ecommerce,53.1,20248436,5642145,13,5,2015
 610,Bioksan,Yes,No,Spain,Food & Beverage,53.02,5914732,1650756,51,14,2014

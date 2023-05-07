@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import numpy as np
+import sqlite3
+
+
+data = np.genfromtxt('FT1000.csv', delimiter=',', dtype='U20')
+
+column = set(data[:,5])
+column.remove('Sector')
+column = sorted([str(i) for i in column])
+
+db = sqlite3.connect("database.db")
+#print(db.total_changes)
+for i in column:
+    cur = db.cursor()
+    cur.execute(f"INSERT INTO Sector (name) VALUES ('{i}')")
+    db.commit()
+
+db.close()
+#for i in column:
+#    print(i)
