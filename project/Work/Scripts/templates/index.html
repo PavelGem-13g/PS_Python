@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mainpage.css') }}">
+</head>
+
+<body>
+    <h1 class="title">
+        TOP 1000 fastest growing companies in Europe
+    </h1>
+
+    <div class="multi_blcok">
+        <h1>
+            Выбор датесета
+        </h1>
+        <div class="block">
+            <form action="/success" method="post" enctype="multipart/form-data">
+                <input type="file" name="file"  accept=".csv"/>
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+    </div>
+
+    <article>
+
+    </article>
+</body>
+
+</html>
