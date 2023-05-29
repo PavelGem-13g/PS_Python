@@ -9,10 +9,34 @@ Created on Sun Mar 12 11:31:53 2023
 import numpy as np
 import pandas as pd
 
-def get_database():
-
-    df = pd.read_csv('../Data/FT1000.csv', delimiter=',')
+def get_database(filename):
+    df = pd.read_csv('../Data/'+filename, delimiter=',')
     return df
+
+def get_reference():
+    result = pd.Series({
+        'Rank':np.int64,
+        'Name':np.object,
+        'Ranked2021':np.object,
+        'Ranked2020':np.object,
+        'Country':np.object, 
+        'Sector':np.object, 
+        'CAGR':np.float64, 
+        'Revenue2020':np.int64, 
+        'Revenue2017':np.int64, 
+        'Employees2020':np.int64, 
+        'Employees2017':np.int64, 
+        'FoundingYear':np.int64
+            })
+    return result
+
+def check_dataset(df):
+    info = df.dtypes
+    # print(info.keys())
+    # print(get_reference().keys())
+    # print(len(info.keys()), len(get_reference().keys()))
+    result = (len(info.keys())==len(get_reference().keys())) and min(info==get_reference())
+    return result
 # =============================================================================
 #     data = data.to_numpy()
 #     
@@ -53,4 +77,5 @@ def get_database():
 # =============================================================================
 
 if __name__=="__main__":
-    df = get_database()
+    df = get_database("FT1000.csv")
+    print(check_dataset(df))

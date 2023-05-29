@@ -17,7 +17,7 @@ import data_loader
 def generate_html_image(fig, name):
     fig.write_image("../Graphics/"+name)
     result = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
-    fig.show()
+    # fig.show()
     return result
 
 

@@ -1,3 +1,7 @@
+div{
+    margin: 0 auto;
+}
+
 .title{
     margin: 0 auto;
     width: 90%;
@@ -26,4 +30,6 @@
     margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

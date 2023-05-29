@@ -17,10 +17,16 @@
             Выбор датесета
         </h1>
         <div class="block">
-            <form action="/success" method="post" enctype="multipart/form-data">
+            <h1>
+                Введите новый элемент таблицы
+            </h1>
+            <form action="/senddataset" method="post" enctype="multipart/form-data">
                 <input type="file" name="file"  accept=".csv"/>
                 <input type="submit" value="Upload">
             </form>
+                <div class="block">
+                    {{ message }}
+                </div>
         </div>
     </div>
 
