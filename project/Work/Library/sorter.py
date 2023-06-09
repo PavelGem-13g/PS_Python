@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue May  9 21:58:37 2023
+Сортировка значений, формирование отчетов
 
 @author: pavel
 """
@@ -36,6 +36,26 @@ def filter(df, keys, col):
     return df.loc[select, col]
 
 def filterByValue(df, column, value, sign):
+    """
+    Сортировка по значению
+
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+    column : List
+        Колонки.
+    value : int
+        Ключевое значение.
+    sign : string
+        Знак.
+
+    Returns
+    -------
+    TYPE
+        DESCRIPTION.
+
+    """
     if sign=='>':
         return df.loc[df[column]>value]
     elif sign=='<':
@@ -44,8 +64,44 @@ def filterByValue(df, column, value, sign):
         return df.loc[df[column]>=value]
     else:
         return df.loc[df[column]<=value]
+    
+def crosstab(df, attribute1, attribute2):
+    """
+    Пересечение талблиц
+
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+    attribute1 : str
+        Атрибут 1.
+    attribute2 : str
+        Атрибут 2.
+
+    Returns
+    -------
+    TYPE
+        DESCRIPTION.
+
+    """
+    print(type(df['Name']), type(df['Country']))
+    return pd.crosstab(df[attribute1], df[attribute2])
 
 def makeOutputs(df):
+    """
+    Сохранение стандартных отчетов
+
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+
+    Returns
+    -------
+    result : List
+        Базовые таблицы для анализа.
+
+    """
     result = []
     describtion = df.describe()
     saver.saveDataFrameToCSV("Describtion", describtion)
@@ -79,5 +135,9 @@ def makeOutputs(df):
 
 
 if __name__=="__main__":
+    """
+    Тестирование
+    """
     df = data_loader.get_database("FT1000.csv")
     res = makeOutputs(df)
+    print(crosstab(df, 'Sector', 'Country'))

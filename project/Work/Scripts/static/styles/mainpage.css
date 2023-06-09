@@ -10,6 +10,7 @@ div{
     border-radius: 20px;
     background-color: rgb(255, 200, 0);
     text-align: center;
+    margin-top: 10px;
 }
 
 .multi_blcok{
@@ -32,4 +33,9 @@ div{
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.table {
+    height:500px;
+    overflow-y: scroll;
 }

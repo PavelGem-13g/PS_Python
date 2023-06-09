@@ -1,27 +1,54 @@
 # -*- coding: utf-8 -*-
-
-# import matplotlib.pyplot as plt
+"""
+Формирования графиков
+"""
 
 import plotly
 import plotly.express as px
 import plotly.io as pio
 pio.renderers.default='svg'
-# pio.renderers.default='browser'
-# import plotly.graph_objects as go
-# from plotly import tools
 
 
 import data_loader
 
 
 def generate_html_image(fig, name):
+    """
+    Одновременная генерация html и скачивание в файл
+
+    Parameters
+    ----------
+    fig : plot
+        График.
+    name : string
+        Название.
+
+    Returns
+    -------
+    result : str
+        HTML-код.
+
+    """
     fig.write_image("../Graphics/"+name)
     result = plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
-    # fig.show()
     return result
 
 
 def generate_plots(df):
+    """
+    Генерация графиков по умолчанию
+
+    Parameters
+    ----------
+    df : DataFrmae
+        База данныъ.
+
+    Returns
+    -------
+    result : List
+        Графики в формате HTML.
+
+    """
     result = []
     
     fig = px.bar(df, x='CAGR', y='Ranked2020', color='Ranked2021', title='Relation between CAGR and Ranked2020', width=1000, height=500, template='plotly_white')
@@ -52,7 +79,97 @@ def generate_plots(df):
 
     return result
     
+def common_plot(df, name):
+    """
+    Генерация гистограммы 
 
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+    name : str
+        Атрибут 1.
+
+    Returns
+    -------
+    fig : Plot
+        График Plotly.
+
+    """
+    fig = px.histogram(df, x=name,color=name, title= 'The most common '+name, width=1000, height=500,template='plotly_white').update_xaxes(categoryorder="total descending")
+    return fig
+
+def box_plot(df, name1, name2):
+    """
+    Генерация графика box
+
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+    name1 : str
+        Атрибут 1.
+    name2 : str
+        Атрибут 2.
+
+    Returns
+    -------
+    fig : Plot
+        График Plotly.
+
+    """
+    fig = px.box(df, x=name1, color=name1, y=name2, title='Distribution and analysis of the '+name1+' by '+name2, width=1000, height=500, template='plotly_white')
+    return fig
+
+def scatter_plot(df, x_name, y_name, color_name, size_name, animation_name):
+    """
+    Генерация графика scatter
+
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+    x_name :  str
+        Атрибут 1.
+    y_name : str
+        Атрибут 2.
+    color_name : str
+        Атрибут 3.
+    size_name : str
+        Атрибут 4.
+    animation_name : str
+        Атрибут 5.
+
+    Returns
+    -------
+    fig : Plot
+        График Plotly.
+
+    """
+    fig = px.scatter(df, x=x_name, y=y_name, color=color_name, size=size_name,animation_frame=df[animation_name], width=1000, height=500, template='plotly_white')
+    return fig
+
+def pie_plot(df, names):
+    """
+    Генерация кругового графика
+
+    Parameters
+    ----------
+    df : DataFrame
+        База данных.
+    names :  str
+        Атрибут 1.
+
+    Returns
+    -------
+    fig : Plot
+        График Plotly.
+
+    """
+    fig = px.pie(df,names, width=1000, height=500, template='plotly_white')
+    return fig
+    
+    
 if __name__ == "__main__":
     df = data_loader.get_database()
     page = generate_plots(df)

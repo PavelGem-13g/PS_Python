@@ -18,21 +18,17 @@
         </h1>
         <div class="block">
             <h1>
-                Введите новый элемент таблицы
+                Введите таблицу
             </h1>
             <form action="/senddataset" method="post" enctype="multipart/form-data">
-                <input type="file" name="file"  accept=".csv"/>
+                <input type="file" name="file" accept=".csv" />
                 <input type="submit" value="Upload">
             </form>
-                <div class="block">
-                    {{ message }}
-                </div>
+            <div class="block">
+                {{ message }}
+            </div>
         </div>
     </div>
-
-    <article>
-
-    </article>
 </body>
 
 </html>

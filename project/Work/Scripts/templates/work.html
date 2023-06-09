@@ -1,1 +1,373 @@
-<!DOCTYPE html><html prefix="og: http://ogp.me/ns#"><head>    <meta charset="utf-8" />    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mainpage.css') }}">        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    <script src="{{ url_for('static',filename='js/mainpage.js') }}"></script></head><body>    <h1 class="title">        TOP 1000 fastest growing companies in Europe    </h1>    <div class="multi_blcok">        <h1>            Добавление новых данных        </h1>        <div class="block">        <form action="/addrow" method="post">            <input type="text" name="Name"  placeholder="Name"/>            <input type="text" name="Ranked2021"  placeholder="Ranked2021"/>            <input type="text" name="Ranked2020"  placeholder="Ranked2020"/>            <input type="text" name="Country"  placeholder="Country"/>            <input type="text" name="Sector"  placeholder="Sector"/>            <input type="text" name="CAGR"  placeholder="CAGR"/>            <input type="text" name="Revenue2020"  placeholder="Revenue2020"/>            <input type="text" name="Revenue2017"  placeholder="Revenue2017"/>            <input type="text" name="Employees2020"  placeholder="Employees2020"/>            <input type="text" name="Employees2017"  placeholder="Employees2017"/>            <input type="text" name="FoundingYear"  placeholder="FoundingYear"/>            <br><input type="submit"><br>        </form>    </div>    </div>        <div class="multi_blcok">        <h1>            Графики        </h1>        {% for plot in plots %}                   <div class="block">            {{ plot|safe }}            </div>        {% endfor %}    </div>    <div class="multi_blcok">        <h1>            Сводные таблицы        </h1>        {% for table in tables %}            <div class="block">            {{ table }} <a href="/download/{{ table }}.csv" download=""> Скачать </a>            </div>        {% endfor %}    </div>        <div class="multi_blcok">        <h1>            Работа с нейросетью        </h1>        <div class="block">            <button id="learn"> Обучить </button>        </div>        <div class="block">                <form id="predict">                    <input type="text" name="Ranked2021"  placeholder="Ranked2021"/>                    <input type="text" name="Ranked2020"  placeholder="Ranked2020"/>                    <input type="text" name="Country"  placeholder="Country"/>                    <input type="text" name="Sector"  placeholder="Sector"/>                    <input type="text" name="CAGR"  placeholder="CAGR"/>                    <input type="text" name="Revenue2017"  placeholder="Revenue2017"/>                    <input type="text" name="Employees2020"  placeholder="Employees2020"/>                    <input type="text" name="Employees2017"  placeholder="Employees2017"/>                    <input type="text" name="FoundingYear"  placeholder="FoundingYear"/>                    <br><input type="submit"><br>                </form>        </div>        <div class="block" id="predict_result">                    </div>    </div></body></html>
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mainpage.css') }}">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="{{ url_for('static',filename='js/mainpage.js') }}"></script>
+</head>
+
+<body>
+    <h1 class="title">
+        TOP 1000 fastest growing companies in Europe
+    </h1>
+
+    <div class="multi_blcok">
+        <h1> База данных </h1>
+        <div class="block table">
+            {{ data|safe }}
+        </div>
+    </div>
+
+    <div class="multi_blcok">
+        <h1>
+            Работа с базой данных
+        </h1>
+
+
+        <div class="block">
+            <input type="radio" id="add-radio" name="radio-action" value="add" onclick="showAddForm()">
+            <label for="add-radio">Добавить запись</label>
+            <input type="radio" id="update-radio" name="radio-action" value="update" onclick="showUpdateForm()">
+            <label for="update-radio">Обновить запись</label>
+            <input type="radio" id="delete-radio" name="radio-action" value="delete" onclick="showDeleteForm()">
+            <label for="delete-radio">Удалить запись</label>
+
+            <a href="/downloaddataset" download="">Скачать</a>
+
+            <div id="add-form" style="display: none;">
+                <h2>Добавить новую запись</h2>
+                <form action="/addrow" method="post">
+                    <input type="text" name="Name" placeholder="Name" required />
+                    <label for="select-answer">Ranked2020:</label>
+                    <select id="select-answer" name="Ranked2020">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+
+                    <label for="select-answer">Ranked2021:</label>
+                    <select id="select-answer" name="Ranked2021">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <input type="text" name="Country" placeholder="Country" required />
+                    <input type="text" name="Sector" placeholder="Sector" required />
+                    <input type="number" name="CAGR" placeholder="CAGR" required />
+                    <input type="number" name="Revenue2020" placeholder="Revenue2020" required />
+                    <input type="number" name="Revenue2017" placeholder="Revenue2017" required />
+                    <input type="number" name="Employees2020" placeholder="Employees2020" required />
+                    <input type="number" name="Employees2017" placeholder="Employees2017" required />
+                    <input type="number" name="FoundingYear" placeholder="FoundingYear" required />
+
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+
+            <div id="update-form" style="display: none;">
+                <h2>Обновить запись</h2>
+                <form action="/updaterow" method="post">
+                    <label for="update-number">Rank:</label>
+                    <input type="text" id="update-number" name="update-number" required>
+
+
+                    <input type="text" name="Name" placeholder="Name" required />
+                    <input type="text" name="Ranked2021" placeholder="Ranked2021" required />
+                    <input type="text" name="Ranked2020" placeholder="Ranked2020" required />
+                    <input type="text" name="Country" placeholder="Country" required />
+                    <input type="text" name="Sector" placeholder="Sector" required />
+                    <input type="text" name="CAGR" placeholder="CAGR" required />
+                    <input type="text" name="Revenue2020" placeholder="Revenue2020" required />
+                    <input type="text" name="Revenue2017" placeholder="Revenue2017" required />
+                    <input type="text" name="Employees2020" placeholder="Employees2020" required />
+                    <input type="text" name="Employees2017" placeholder="Employees2017" required />
+                    <input type="text" name="FoundingYear" placeholder="FoundingYear" required />
+
+
+                    <button type="submit">Обновить</button>
+                </form>
+            </div>
+
+            <div id="delete-form" style="display: none;">
+                <h2>Удалить запись</h2>
+                <form action="/deleterow" method="post">
+                    <label for="delete-number">Rank:</label>
+                    <input type="text" id="delete-number" name="delete-number" required>
+                    <button type="submit">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="multi_blcok">
+        <h1>
+            Графики
+        </h1>
+        {% for plot in plots %}
+        <div class="block">
+            {{ plot|safe }}
+        </div>
+        {% endfor %}
+
+        <div id="common-plot" class="block">
+            <h1>
+                Common plot
+            </h1>
+            <lable for="common-plot-select"> Attribute </lable>
+            <select id="common-plot-select">
+                <option value="Name"> Name </option>
+                <option value="Country"> Country </option>
+                <option value="Sector"> Sector </option>
+            </select>
+
+            <button id="common-plot-button"> Построить </button>
+
+            <div id="common-plot-plot"></div>
+        </div>
+
+        <div id="box-plot" class="block">
+            <h1>
+                Box plot
+            </h1>
+            <lable for="box-plot-select-1"> X </lable>
+            <select id="box-plot-select-1">
+                <option value="Name"> Name </option>
+                <option value="Ranked2021"> Ranked2021 </option>
+                <option value="Ranked2020"> Ranked2020 </option>
+                <option value="Country"> Country </option>
+                <option value="Sector"> Sector </option>
+                <option value="CAGR"> CAGR </option>
+                <option value="Revenue2020"> Revenue2020 </option>
+                <option value="Revenue2017"> Revenue2017 </option>
+                <option value="Employees2020"> Employees2020 </option>
+                <option value="Employees2017"> Employees2017 </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <lable for="box-plot-select-2"> Y </lable>
+            <select id="box-plot-select-2">
+                <option value="Name"> Name </option>
+                <option value="Ranked2021"> Ranked2021 </option>
+                <option value="Ranked2020"> Ranked2020 </option>
+                <option value="Country"> Country </option>
+                <option value="Sector"> Sector </option>
+                <option value="CAGR"> CAGR </option>
+                <option value="Revenue2020"> Revenue2020 </option>
+                <option value="Revenue2017"> Revenue2017 </option>
+                <option value="Employees2020"> Employees2020 </option>
+                <option value="Employees2017"> Employees2017 </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <button id="box-plot-button"> Построить </button>
+
+            <div id="box-plot-plot"></div>
+        </div>
+
+        <div id="scatter-plot" class="block">
+            <h1>
+                Scatter plot
+            </h1>
+            <lable for="scatter-plot-select-1"> X </lable>
+            <select id="scatter-plot-select-1">
+                <option value="Ranked2021"> Ranked2021 </option>
+                <option value="Ranked2020"> Ranked2020 </option>
+                <option value="CAGR"> CAGR </option>
+                <option value="Revenue2020"> Revenue2020 </option>
+                <option value="Revenue2017"> Revenue2017 </option>
+                <option value="Employees2020"> Employees2020 </option>
+                <option value="Employees2017"> Employees2017 </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <lable for="scatter-plot-select-2"> Y </lable>
+            <select id="scatter-plot-select-2">
+                <option value="Ranked2021"> Ranked2021 </option>
+                <option value="Ranked2020"> Ranked2020 </option>
+                <option value="CAGR"> CAGR </option>
+                <option value="Revenue2020"> Revenue2020 </option>
+                <option value="Revenue2017"> Revenue2017 </option>
+                <option value="Employees2020"> Employees2020 </option>
+                <option value="Employees2017"> Employees2017 </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <lable for="scatter-plot-select-3"> Color </lable>
+            <select id="scatter-plot-select-3">
+                <option value="Ranked2021"> Ranked2021 </option>
+                <option value="Ranked2020"> Ranked2020 </option>
+                <option value="Country"> Country </option>
+                <option value="Sector"> Sector </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <lable for="scatter-plot-select-4"> Size </lable>
+            <select id="scatter-plot-select-4">
+                <option value="CAGR"> CAGR </option>
+                <option value="Revenue2020"> Revenue2020 </option>
+                <option value="Revenue2017"> Revenue2017 </option>
+                <option value="Employees2020"> Employees2020 </option>
+                <option value="Employees2017"> Employees2017 </option>
+            </select>
+
+            <lable for="scatter-plot-select-5"> Animation </lable>
+            <select id="scatter-plot-select-5">
+                <option value="Name"> Name </option>
+                <option value="Ranked2021"> Ranked2021 </option>
+                <option value="Ranked2020"> Ranked2020 </option>
+                <option value="Country"> Country </option>
+                <option value="Sector"> Sector </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <button id="scatter-plot-button"> Построить </button>
+
+            <div id="scatter-plot-plot"></div>
+        </div>
+
+        <div id="pie-plot" class="block">
+            <h1>
+                Pie plot
+            </h1>
+
+            <lable for="pie-plot-select"> Animation </lable>
+            <select id="pie-plot-select">
+                <option value="Country"> Country </option>
+                <option value="Sector"> Sector </option>
+                <option value="FoundingYear"> FoundingYear </option>
+            </select>
+
+            <button id="pie-plot-button"> Построить </button>
+
+            <div id="pie-plot-plot"></div>
+        </div>
+    </div>
+
+    <div class="multi_blcok">
+        <h1>
+            Отчеты
+        </h1>
+        {% for table in tables %}
+        <div class="block">
+            {{ table }} <a href="/download/{{ table }}.csv" download=""> Скачать </a>
+        </div>
+        {% endfor %}
+
+        <div class="block">
+            <h1> Фильтрация </h1>
+
+            <form id="filtration">
+                <label> Исследуемое поле: </label>
+                <select id="select-answer" name="filtration-answer">
+                    <option value="CAGR"> CAGR </option>
+                    <option value="Revenue2017"> Revenue2017 </option>
+                    <option value="Revenue2020"> Revenue2017 </option>
+                    <option value="FoundingYear"> Employees2017 </option>
+                </select>
+
+                <label> Признак: </label>
+                <select id="select-answer" name="filtration-sign">
+                    <option value=">"> ">" </option>
+                    <option value="<"> "<" </option>
+                </select>
+
+                <label> Значение: </label>
+                <input type="number" name="filtration-value" placeholder="Value" required /><br>
+
+                <label> Название выходного файла: </label>
+                <input type="text" name="filtration-filename" placeholder="Filename" required /><br>
+
+                <button type="submit">Вычислить результат</button>
+
+                <a id="filtration-download" href="/download/.csv" download="" style="display:none"> Скачать </a>
+            </form>
+        </div>
+        <div class="block">
+            <h1> Сводная таблица </h1>
+            <form id="crosstab-form">
+                <lable for="crosstab-select-1"> Attribute 1 </lable>
+                <select name="crosstab-select-1">
+                    <option value="Country"> Country </option>
+                    <option value="Sector"> Sector </option>
+                    <option value="FoundingYear"> FoundingYear </option>
+                </select>
+
+                <lable for="crosstab-select-2"> Attribute 2 </lable>
+                <select name="crosstab-select-2">
+                    <option value="Country"> Country </option>
+                    <option value="Sector"> Sector </option>
+                    <option value="FoundingYear"> FoundingYear </option>
+                </select>
+
+                <label> Название выходного файла: </label>
+                <input type="text" name="crosstab-filename" placeholder="Filename" required /><br>
+
+                <button type="submit">Вычислить результат</button>
+                <a id="crosstab-download" href="/download/.csv" download="" style="display:none"> Скачать </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="multi_blcok">
+        <h1>
+            Работа с нейросетью
+        </h1>
+        <div class="block" id="learn">
+            <button id="learn-button"> Обучить </button> <br>
+
+            <form id="learn-upload" method="POST" enctype="multipart/form-data">
+                <input type="file" id="learn-model" name="learn-model">
+                <button type="submit">Load Model</button>
+            </form>
+
+            <a id="learn-download" href="/model/model.pkl" download="" style="display:none">Скачать</a>
+
+        </div>
+
+        <div class="block" id="predict" style="display:none">
+            <div>
+                <h1> Входные данные: </h1>
+                <form id="predict-form">
+                    <input type="number" name="Ranked2021" placeholder="Ranked2021" required />
+                    <input type="number" name="Ranked2020" placeholder="Ranked2020" required />
+                    <input type="number" name="Country" placeholder="Country" required />
+                    <input type="number" name="Sector" placeholder="Sector" required />
+                    <input type="number" name="CAGR" placeholder="CAGR" required />
+                    <input type="number" name="Revenue2017" placeholder="Revenue2017" required />
+                    <input type="number" name="Employees2020" placeholder="Employees2020" required />
+                    <input type="number" name="Employees2017" placeholder="Employees2017" required />
+                    <input type="number" name="FoundingYear" placeholder="FoundingYear" required />
+                    <br><input type="submit"><br>
+                </form>
+            </div>
+
+            <div class="block" id="predict_result" style="display:none">
+                <h1> Результат: </h1>
+                <div id="predict_result-result">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="multi_blcok">
+        <div class="block">
+            <h3>Выбор фонового цвета</h3>
+            <input type="color" id="main-color">
+        </div>
+        <div class="block">
+            <h3>Выбор шрифта</h3>
+            <select id="font-type">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Verdana">Verdana</option>
+            </select>
+        </div>
+    </div>
+</body>
+
+</html>
