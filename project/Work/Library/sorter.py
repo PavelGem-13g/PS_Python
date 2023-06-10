@@ -11,7 +11,7 @@ import pandas as pd
 import saver
 import data_loader
 
-def filter(df, keys, col):
+def filter(_df, keys, col):
     """
     Фильтрация данных
 
@@ -31,11 +31,11 @@ def filter(df, keys, col):
 
     """
     for i in keys:
-        select = (df[i].isin(keys[i]))
-        df = df.loc[select, :]
-    return df.loc[select, col]
+        select = (_df[i].isin(keys[i]))
+        _df = _df.loc[select, :]
+    return _df.loc[select, col]
 
-def filterByValue(df, column, value, sign):
+def filterByValue(_df, column, value, sign):
     """
     Сортировка по значению
 
@@ -57,15 +57,15 @@ def filterByValue(df, column, value, sign):
 
     """
     if sign=='>':
-        return df.loc[df[column]>value]
+        return _df.loc[_df[column]>value]
     elif sign=='<':
-        return df.loc[df[column]<value]
+        return _df.loc[_df[column]<value]
     elif sign=='>=':
-        return df.loc[df[column]>=value]
+        return _df.loc[_df[column]>=value]
     else:
-        return df.loc[df[column]<=value]
+        return _df.loc[_df[column]<=value]
     
-def crosstab(df, attribute1, attribute2):
+def crosstab(_df, attribute1, attribute2):
     """
     Пересечение талблиц
 
@@ -84,10 +84,10 @@ def crosstab(df, attribute1, attribute2):
         DESCRIPTION.
 
     """
-    print(type(df['Name']), type(df['Country']))
-    return pd.crosstab(df[attribute1], df[attribute2])
+    print(type(_df['Name']), type(_df['Country']))
+    return pd.crosstab(_df[attribute1], _df[attribute2])
 
-def makeOutputs(df):
+def makeOutputs(_df):
     """
     Сохранение стандартных отчетов
 
@@ -103,27 +103,27 @@ def makeOutputs(df):
 
     """
     result = []
-    describtion = df.describe()
+    describtion = _df.describe()
     saver.saveDataFrameToCSV("Describtion", describtion)
     table1 = filter(
-        df,
+        _df,
         {"Country":{"UK", "Germany", "France", "Italy", "Spain"}},
         ["Name", "Sector"])
     saver.saveDataFrameToCSV(
         "Top companies from top 5 countries",
         filter(
-            df,
+            _df,
             {"Country":{"UK", "Germany", "France", "Italy", "Spain"}},
             ["Name", "Sector"]))
     table2 = filterByValue(
-    df,
+    _df,
     "Employees2017", 
     200,
     ">")
     saver.saveDataFrameToCSV(
         "Companies with employees greater than 200",
         filterByValue(
-        df,
+        _df,
         "Employees2017", 
         200,
         ">"))

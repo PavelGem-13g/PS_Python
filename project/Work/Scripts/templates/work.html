@@ -77,16 +77,25 @@
 
 
                     <input type="text" name="Name" placeholder="Name" required />
-                    <input type="text" name="Ranked2021" placeholder="Ranked2021" required />
-                    <input type="text" name="Ranked2020" placeholder="Ranked2020" required />
+                    <label for="select-answer">Ranked2020:</label>
+                    <select id="select-answer" name="Ranked2020">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+
+                    <label for="select-answer">Ranked2021:</label>
+                    <select id="select-answer" name="Ranked2021">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
                     <input type="text" name="Country" placeholder="Country" required />
                     <input type="text" name="Sector" placeholder="Sector" required />
-                    <input type="text" name="CAGR" placeholder="CAGR" required />
-                    <input type="text" name="Revenue2020" placeholder="Revenue2020" required />
-                    <input type="text" name="Revenue2017" placeholder="Revenue2017" required />
-                    <input type="text" name="Employees2020" placeholder="Employees2020" required />
-                    <input type="text" name="Employees2017" placeholder="Employees2017" required />
-                    <input type="text" name="FoundingYear" placeholder="FoundingYear" required />
+                    <input type="number" name="CAGR" placeholder="CAGR" required />
+                    <input type="number" name="Revenue2020" placeholder="Revenue2020" required />
+                    <input type="number" name="Revenue2017" placeholder="Revenue2017" required />
+                    <input type="number" name="Employees2020" placeholder="Employees2020" required />
+                    <input type="number" name="Employees2017" placeholder="Employees2017" required />
+                    <input type="number" name="FoundingYear" placeholder="FoundingYear" required />
 
 
                     <button type="submit">Обновить</button>
@@ -355,6 +364,7 @@
     </div>
     
     <div class="multi_blcok">
+        <h1> Настройка интерфейса </h1>
         <div class="block">
             <h3>Выбор фонового цвета</h3>
             <input type="color" id="main-color">

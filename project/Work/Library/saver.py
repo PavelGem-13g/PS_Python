@@ -9,7 +9,7 @@
 import pickle
 
 
-def saveDataFrameToCSV(name, df):
+def saveDataFrameToCSV(name, _df):
     """
     Сохранение датасета в внутреннюю директорию
 
@@ -25,7 +25,7 @@ def saveDataFrameToCSV(name, df):
     None.
 
     """
-    df.to_csv("../Outputs/"+name+".csv")
+    _df.to_csv("../Outputs/"+name+".csv")
 
 
 def save_model(name, model):
@@ -44,5 +44,5 @@ def save_model(name, model):
     None.
 
     """
-    with open('../Outputs/'+name+'.pkl', 'wb') as f:
-        pickle.dump(model, f)
+    with open('../Outputs/'+name+'.pkl', 'wb') as _f:
+        pickle.dump(model, _f)

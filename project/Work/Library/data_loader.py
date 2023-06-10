@@ -24,8 +24,8 @@ def get_database(filename):
         База данных.
 
     """
-    df = pd.read_csv('../Data/'+filename, delimiter=',')
-    return df
+    _df = pd.read_csv('../Data/'+filename, delimiter=',')
+    return _df
 
 def get_reference():
     """
@@ -38,19 +38,13 @@ def get_reference():
 
     """
     result = pd.Series({
-        'Rank':np.int64,'Name':np.object,'Ranked2021':np.object,'Ranked2020':np.object,
-        'Country':np.object, 
-        'Sector':np.object, 
-        'CAGR':np.float64, 
-        'Revenue2020':np.int64, 
-        'Revenue2017':np.int64, 
-        'Employees2020':np.int64, 
-        'Employees2017':np.int64, 
-        'FoundingYear':np.int64
-            })
+'Rank':np.int64,'Name':np.object,'Ranked2021':np.object,'Ranked2020':np.object,
+'Country':np.object,'Sector':np.object, 'CAGR':np.float64,
+'Revenue2020':np.int64,'Revenue2017':np.int64, 'Employees2020':np.int64, 
+'Employees2017':np.int64,'FoundingYear':np.int64})
     return result
 
-def check_dataset(df):
+def check_dataset(_df):
     """
     Проверка на валидность
 
@@ -65,7 +59,7 @@ def check_dataset(df):
         Значение правильности.
 
     """
-    info = df.dtypes
+    info = _df.dtypes
     result = (len(info.keys())==len(get_reference().keys())) and min(info==get_reference())
     return result
 
